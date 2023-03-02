@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html {{ HTML_ATTRS }}>
+<head {{ HEAD_ATTRS }}>
+    {{ HEAD }}
+</head>
+<body {{ BODY_ATTRS }}>
+{{ APP }}
+</body>
+
+<script async id="__cn_generic_script__{{ ENV.CONNECTIF_ID}}">!function (e) {
+    function t () {
+        if (!e.querySelector('#__cn_client_script_{{ ENV.CONNECTIF_ID}}')) {
+            var t = e.createElement('script')
+            t.setAttribute('src', '{{ENV.CONNECTIF_URL}}'), e.body.appendChild(t)
+        }
+    }
+
+    'complete' === e.readyState || 'interactive' === e.readyState ? t() : e.addEventListener('DOMContentLoaded', t)
+}(document)</script>
+
+<script>
+    document.addEventListener('connectif.managed.initialized', function onConnectifInitialized () {
+        const message = 'Connectif is initialized'
+        console.info(message)
+        $nuxt.$toast.info(message, {duration: 2000, theme: 'bubble'})
+
+        // now I can start tracking events
+        connectif.managed.sendEvents([{ type: 'page-visit' }])
+    })
+</script>
+</html>
